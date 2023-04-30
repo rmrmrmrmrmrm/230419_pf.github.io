@@ -1,0 +1,281 @@
+
+<h3 class="sec-h3">
+<span>WEBサイト制作承ります</span>
+</h3>
+<p class="sec-detail">
+わかりやすく・つたわりやすく・あなたのビジネスをアピール
+</p>
+
+git clone https://github.com/rmrmrmrmrmrm/230419_pf.github.io
+
+
+/Users/masudarisa/Git_test/project/.ssh
+cd ~/.ssh
+
+~/.ssh/config
+
+Host *.github.com
+AddKeysToAgent yes
+UseKeychain yes
+IdentityFile ~/.ssh/id_ed25519
+
+
+pbcopy < ~/.ssh/id_ed25519.pub
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+既存の SSH キーが存在するかどうかを確認
+-------------------------------------------------------------------------------------------------------------------------------------------------
+//コマンド
+ls -al ~/.ssh
+
+//結果
+total 24
+drwx------   5 masudarisa  staff   160  4 29 11:15 .
+drwxr-xr-x+ 38 masudarisa  staff  1216  4 29 09:52 ..
+-rw-r--r--@  1 masudarisa  staff    89  4 29 11:15 config
+-rw-------   1 masudarisa  staff  2675  4 29 10:30 id_rsa 　←　id_rsa.pubファイルが秘密鍵
+-rw-r--r--   1 masudarisa  staff   593  4 29 10:30 id_rsa.pub 　←　id_rsa.pubファイルが公開鍵ファイル
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+もう一回SSHキーを作る（目標:id_ed25519.pubを作る）
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+１以下のテキストを貼り付けます。メールアドレスは自分の GitHub メールアドレスに置き換えてください。
+これにより、指定したメールアドレスをラベルとして使って新しい SSH キーが作成されます。
+|
+//コマンド
+ssh-keygen -t ed25519 -C "masuda.risa.226@gmail.com"
+//結果
+Generating public/private ed25519 key pair.（キーを保存するファイルを入力してください）
+Enter file in which to save the key (/Users/masudarisa/.ssh/id_ed25519):
+
+"キーを保存するファイルを入力してください" というメッセージが表示されたら、Enterを押して
+プロンプトが表示されたら、セキュアなパスフレーズを入力します。
+|
+//結果
+Enter passphrase (empty for no passphrase): [Type a passphrase]
+Enter same passphrase again: [Type passphrase again]
+
+既存の SSH キーが存在するかどうかを確認
+|
+//コマンド
+ls -al ~/.ssh
+//結果
+total 40
+drwx------   7 masudarisa  staff   224  4 29 11:51 .
+drwxr-xr-x+ 38 masudarisa  staff  1216  4 29 09:52 ..
+-rw-r--r--@  1 masudarisa  staff    89  4 29 11:15 config
+-rw-------   1 masudarisa  staff   464  4 29 11:51 id_ed25519　←　できてる！OK
+-rw-r--r--   1 masudarisa  staff   107  4 29 11:51 id_ed25519.pub　←　できてる！OK
+-rw-------   1 masudarisa  staff  2675  4 29 10:30 id_rsa
+-rw-r--r--   1 masudarisa  staff   593  4 29 10:30 id_rsa.pub
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+SSH キーを ssh-agent に追加する（目標:id_ed25519.pubで追加する）
+-------------------------------------------------------------------------------------------------------------------------------------------------
+バックグラウンドでssh-agentを開始
+|
+//コマンド
+eval "$(ssh-agent -s)
+//結果
+Agent pid 25785
+
+まず、~/.ssh/configファイルが既定の場所に存在するかどうかを調べます。
+|
+//コマンド
+open ~/.ssh/config
+//結果
+（ファイルがない場合は、ファイルを作成します。「touch ~/.ssh/config」）
+メモ帳が開く。中身は以下の通り
+Host *.github.com
+AddKeysToAgent yes
+UseKeychain yes
+IdentityFile ~/.ssh/id_ed25519
+
+SSH 秘密鍵を ssh-agent に追加して、パスフレーズをキーチェーンに保存します。
+|
+//コマンド
+ssh-add --apple-use-keychain ~/.ssh/id_ed25519
+//結果
+ssh-add: illegal option -- -
+usage: ssh-add [options] [file ...]
+Options:
+-l          List fingerprints of all identities.
+-E hash     Specify hash algorithm used for fingerprints.
+-L          List public key parameters of all identities.
+-k          Load only keys and not certificates.
+-c          Require confirmation to sign using identities
+-m minleft  Maxsign is only changed if less than minleft are left (for XMSS)
+-M maxsign  Maximum number of signatures allowed (for XMSS)
+-t life     Set lifetime (in seconds) when adding identities.
+-d          Delete identity.
+-D          Delete all identities.
+-x          Lock agent.
+-X          Unlock agent.
+-s pkcs11   Add keys from PKCS#11 provider.
+-e pkcs11   Remove keys provided by PKCS#11 provider.
+-T pubkey   Test if ssh-agent can access matching private key.
+-q          Be quiet after a successful operation.
+-A          Add all identities stored in your keychain.
+-K          Store passphrases in your keychain.
+            With -d, remove passphrases from your keychain.
+
+できたん？？？
+わからへん...
+-------------------------------------------------------------------------------------------------------------------------------------------------
+GitHub アカウントへの新しい SSH キーの追加
+-------------------------------------------------------------------------------------------------------------------------------------------------
+SSH 公開鍵をクリップボードにコピーします。
+|
+//コマンド
+pbcopy < ~/.ssh/id_ed25519.pub
+//結果
+（クリップボードに公開鍵が入ってる
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID+xRpmme9MiOwnPaEy9GUwOUtEQKd7oKNLuhf15aDsF masuda.risa.226@gmail.com
+）
+
+・Githubの右上の自分のアイコン画像をクリックして[設定]をクリックします。
+・サイドバーの [アクセス] セクションで、  SSH キーと GPG キーをクリックします。
+・[New SSH key](新しい SSH キー) または [Add SSH key](SSH キーの追加) をクリックします。
+・[Title] フィールドで、新しいキーを説明するラベルを追加します。 たとえば、個人のラップトップを使っている場合、このキーに「個人用ラップトップ」といった名前を付けます。
+・キーの種類として、認証または署名のいずれかを選びます。 コミット署名の詳細については、「コミット署名の検証について」を参照してください。
+・[キー] フィールドに公開キーを貼り付けます。
+・[Add SSH key](SSH キーの追加) をクリックします。
+・ダイアログが表示されたら GitHub のアカウントへのアクセスを確認します(Githubのパスワードを入力)。 詳しくは、「Sudo モード」を参照してください。
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+SSH 接続をテストする
+-------------------------------------------------------------------------------------------------------------------------------------------------
+接続をテストするとき、先立って作成した SSH キーパスフレーズのパスワードを使ってこのアクションを認証する必要があります。
+|
+//コマンド
+ssh -T git@github.com
+//結果
+（まだ、GithubにSSH接続をしたことが無い場合は、以下のような警告が表示される場合があります:←出た）
+The authenticity of host 'github.com (20.27.177.113)' can't be established.
+ECDSA key fingerprint is SHA256:p2QAMXNIC1TJYWeIOttrVc98/R1BUFWu3/LiyKgUfQM.
+Are you sure you want to continue connecting (yes/no/[fingerprint])?
+
+表示されるメッセージのフィンガープリントが、GitHub の公開キー フィンガープリントと一致することを確認します。
+（ECDSAってやつと一致してた）
+接続してもいいか？という確認に「yes」と入力します。
+|
+//コマンド
+yes
+//結果
+Warning: Permanently added 'github.com,20.27.177.113' (ECDSA) to the list of known hosts.（警告: 既知のホストのリストに「github.com,20.27.177.113」(ECDSA) が永久に追加されました。）
+ssh_dispatch_run_fatal: Connection to 20.27.177.113 port 22: Broken pipe（ssh_dispatch_run_fatal: 20.27.177.113 ポート 22 への接続: 壊れたパイプ）
+
+これで、ローカルのSSHのconfigファイルにGithubがホストの一つとして登録されました。
+再度、「ssh -T git@github.com」コマンドを実行します。
+|
+//コマンド
+ssh -T git@github.com
+//結果
+Enter passphrase for key '/Users/masudarisa/.ssh/id_ed25519':
+
+SSH秘密鍵にパスフレーズが設定されている場合、秘密鍵を使用するたびにパスフレーズを入力する必要があります。
+|
+//コマンド
+パスフレーズを入力してEnter
+//結果
+Hi rmrmrmrmrmrm! You've successfully authenticated, but GitHub does not provide shell access.
+（こんにちはrmrmrmrmrmrm！認証に成功しましたが、GitHub はシェル アクセスを提供していません。）
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+GitHub Pagesを使ってWebページを公開する
+https://docs.github.com/ja/pages/getting-started-with-github-pages/about-github-pages
+-------------------------------------------------------------------------------------------------------------------------------------------------
+１ユーザサイト用リポジトリの作成
+　ページの右上隅で、[] ドロップダウン メニューを使用して、 [新しいリポジトリ] を選択します。
+　[所有者] ドロップダウン メニューを使い、リポジトリを所有させたいアカウントを選択します。
+　リポジトリの公開範囲を選択※そのリポジトリがプライベートであってもインターネットからのアクセスに対して公開されます。（URLしられてたら公開してるのと一緒よってこと）
+　[Initialize this repository with a README] (このレポジトリを README で初期化する) を選択します。 1. [Create repository] (リポジトリの作成) をクリックします。
+ローカルのターミナルで、下記のように実行してください（usernameは自分のGitHubユーザ名に変更しましょう）。
+|
+//コマンド
+(cd /Users/masudarisa/Git_test/projectに移動してから)
+git clone https://github.com/rmrmrmrmrmrm/rmrmrmrmrmrm.github.io
+//結果
+Cloning into 'rmrmrmrmrmrm.github.io'...
+Username for 'https://github.com': ←rmrmrmrmrmrm入力
+Password for 'https://rmrmrmrmrmrm@github.com': ←G2guyAEV入力
+remote: Support for password authentication was removed on August 13, 2021.
+（リモート: 2021 年 8 月 13 日にパスワード認証のサポートが削除されました。）
+remote: Please see https://docs.github.com/en/get-started/getting-started-with-git/about-remote-repositories#cloning-with-https-urls for information on currently recommended modes of authentication.
+（これ見てね）
+fatal: Authentication failed for 'https://github.com/rmrmrmrmrmrm/rmrmrmrmrmrm.github.io/'
+（認証エラーしました）
+
+■エラーでGithubにプッシュできない件 | https://shuhey-hashimoto.com/%E3%81%9D%E3%81%AE%E4%BB%96/fatal-authentication-failed-for-%E3%82%A8%E3%83%A9%E3%83%BC%E3%81%A7github%E3%81%AB%E3%83%97%E3%83%83%E3%82%B7%E3%83%A5%E3%81%A7%E3%81%8D%E3%81%AA%E3%81%84%E4%BB%B6/
+・Githubのサイトへ行き、 右上の自分のアイコンからSettingsを開きます。
+　Developer settings
+　Personal access tokens
+　Personal access tokens (classic)
+　「Generate new Token」をクリック
+　githubのパスワード認証
+　New personal access token (classic)というページが開きます。
+　Note（何に使うかメモ） ←ポートフォリオ公開
+　期限を記入 ←60日とりあえず
+　必要な権限にチェックを入れます。
+　（僕はrepoにだけチェックを入れましたが、ご自身の環境にあったものを選んでください）
+　最後に画面下部の「GenerateToken」を押す
+　「パーソナル アクセス トークンを今すぐコピーしてください。もう二度と見られません！」
+　コピーした「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」
+
+■Githubのアカウント　キーチェーン　パスワードをトークンに置き換える
+個人用アクセス トークンの作成 | https://docs.github.com/ja/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token#%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89-%E3%83%A9%E3%82%A4%E3%83%B3%E3%81%A7-personal-access-token-%E3%82%92%E4%BD%BF%E7%94%A8%E3%81%99%E3%82%8B
+トークンを入手したなら、HTTPS経由でGitの操作をする際にパスワードの代わりにそのトークンを入力できます。
+|
+//コマンド
+git clone https://github.com/rmrmrmrmrmrm/230419_pf.github.io.git
+ユーザ名入力：rmrmrmrmrmrm
+パスワード入力：G2guyAEV
+【エラー：トークンで接続してくれ】
+remote: Support for password authentication was removed on August 13, 2021.
+remote: Please see https://docs.github.com/en/get-started/getting-started-with-git/about-remote-repositories#cloning-with-https-urls for information on currently recommended modes of authentication.
+fatal: Authentication failed for 'https://github.com/rmrmrmrmrmrm/230419_pf.github.io.git/'
+ーーー
+git clone https://github.com/rmrmrmrmrmrm/230419_pf.github.io.git
+ユーザ名入力：rmrmrmrmrmrm
+トークン入力：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
+【警告: 空のリポジトリを複製したようです。）】
+warning: You appear to have cloned an empty repository.
+クローンできてる！！！！！！！！！！！！！！！！！！！！！！！！
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+|
+//コマンド
+//結果
+
+|
+//コマンド
+//結果
+
+|
+//コマンド
+//結果
+
+|
+//コマンド
+//結果
+
+|
+//コマンド
+//結果
+
+|
+//コマンド
+//結果
+
+|
+//コマンド
+//結果

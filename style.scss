@@ -1,0 +1,31 @@
+// FLOCSS
+//【Foundation】ベースとなるCSSやリセットCSSなど
+//    @use    "reset" as r; 
+@import "reset"; 
+//    @use    "base" as b; 
+@import "base"; 
+
+#main-contentsnamae {margin: 10em 0;}
+.sec-body {}
+.sec-body div.sec-inner {width: var(--thema-width);margin-right: auto;margin-left: auto;}
+.sec-body div.sec-inner .imgbox {display: flex;flex-wrap: wrap;align-items: center;justify-content: space-around;background-color: #5f9ea091;margin: 1em 0;}
+.sec-body div.sec-inner .imgbox h1 {width: 100%;margin: 0 0 2em;}
+.sec-body div.sec-inner .imgbox h1 span {border-bottom: solid 1px;font-size: 1.8em;font-weight: bold;}
+.sec-body div.sec-inner .imgbox div.img {width: 50%;}
+.sec-body div.sec-inner .imgbox div.img img {}
+.sec-body div.sec-inner .imgbox div.txt {width: 50%;}
+.sec-body div.sec-inner .imgbox div.txt p {}
+
+
+@media screen and (max-width:800px) {
+#main-contentsnamae {}
+.sec-body {}
+.sec-body div.sec-inner {}
+.sec-body div.sec-inner .imgbox {}
+.sec-body div.sec-inner .imgbox h1 {}
+.sec-body div.sec-inner .imgbox h1 span {}
+.sec-body div.sec-inner .imgbox div.img {}
+.sec-body div.sec-inner .imgbox div.img img {}
+.sec-body div.sec-inner .imgbox div.txt {}
+.sec-body div.sec-inner .imgbox div.txt p {}
+}

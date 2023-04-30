@@ -1,0 +1,91 @@
+@charset "utf-8";
+/*============================ 
+header
+============================*/
+header {display: flex;align-items: center;justify-content: flex-end;z-index: 1;height: 80px;position: sticky;top: 0;left: 0;filter: drop-shadow(0px 0px 5px rgba(255,255,255,0.5));box-shadow: 0px 0px 10px 10px rgba(0,0,0,0.1);}
+header:after {position: absolute;bottom: 0;left: 0;margin: auto;content: "";width: 100%;height: 2px;background:#fbfaf9;}
+header a {}
+/**/
+#logo {width: 150px;position: absolute;left: 3%;top: 20px;}
+#logo a {}
+#logo a img.logo_svg {filter: invert(85%) sepia(0%) saturate(5%) hue-rotate(250deg) brightness(105%) contrast(107%);}
+#logo a img.logo_svg.yama {}
+#logo a img.logo_svg.shiro {width: 3em;vertical-align: .3em;}
+/**/
+header nav#menubar {margin-right: 3%;}
+header nav#menubar ul {display: flex;}
+header nav#menubar ul li {margin: 0 1em;}
+header nav#menubar ul li a,
+header nav#menubar ul li span {/* color: #fff; */font-size: 1.14em;text-decoration: none;}
+header nav#menubar ul li.hover-menu_parent {position: relative;}
+header nav#menubar ul li.hover-menu_parent ul {display: none;}
+header nav#menubar ul li.hover-menu_parent.hmp-on ul {display: flex;position: absolute;top: 2em;left: -50%;width: 200%;margin: auto;flex-wrap: wrap;background: #333;padding: 2em;}
+header nav#menubar ul li.hover-menu_parent ul li {width: 100%;margin: .5em 0;}
+header nav#menubar ul li.hover-menu_parent ul li a {}
+header nav#menubar ul li.inline {}
+header nav#menubar ul li.inline a {}
+header nav#menubar ul li.inline a i.fab.fa-twitter {}
+header nav#menubar ul li.inline a i.fab.fa-instagram {}
+header nav#menubar ul li.inline a i.fab.fa-facebook-f {}
+.fa-twitter:before {content: "\f099";}
+.fa-instagram:before {content: "\f16d";}
+.fa-facebook-f:before {content: "\f39e";}
+/*============================ 
+footer
+============================*/
+footer {font-size: 0.7rem;text-align: center;padding: 4em 2em 2em;background: #111;color: #fff;}
+/**/
+footer ul#footernav {display: flex;flex-wrap: wrap;justify-content: space-between;align-items: flex-start;width: var(--thema-width);margin-right: auto;margin-left: auto;margin-bottom: 15px;}
+footer ul#footernav li {}
+footer ul#footernav li a {text-decoration: none;}
+footer small {}
+
+
+@media screen and (max-width:800px) {
+/*============================ 
+header
+============================*/
+header {}
+/**/
+#logo {}
+#logo a {}
+#logo a img {}
+/**/
+header nav#menubar {position: fixed;top: 80px;right: -50%;width: 50%;background: #000;margin: 0;transition-duration: .4s;}
+header nav#menubar.mb-open {right: 0;}
+header nav#menubar ul {display: flex;flex-wrap: wrap;justify-content: center;padding: 5em 4em;}
+header nav#menubar ul li {width: 100%;margin: 2em 0;}
+header nav#menubar ul li a,
+header nav#menubar ul li span {font-size: 3.2em;}
+header nav#menubar ul li.hover-menu_parent {}
+header nav#menubar ul li.hover-menu_parent.hmp-on ul,
+header nav#menubar ul li.hover-menu_parent ul {height: 0;overflow: hidden;padding: 0;}
+header nav#menubar ul li.hover-menu_parent #click-menu.cm-on+ul {position: relative;top: 0;left: -4em;width: 122%;margin: 2em 0 0;padding: 2em;height: auto;}
+header nav#menubar ul li.hover-menu_parent ul li {}
+header nav#menubar ul li.hover-menu_parent ul li a {}
+header nav#menubar ul li.inline {}
+header nav#menubar ul li.inline a {}
+header nav#menubar ul li.inline a i.fab.fa-twitter {}
+header nav#menubar ul li.inline a i.fab.fa-instagram {}
+header nav#menubar ul li.inline a i.fab.fa-facebook-f {}
+/**/
+header div#menubar-btn {display: flex;margin: 0 3% 0 0;width: 52px;height: 52px;background-color: #5f9ea091;justify-content: center;align-items: center;flex-wrap: wrap;align-content: center;}
+header div#menubar-btn span {display: block;transition: 0.3s;border-top: 2px solid #fff;width: 60%;}
+header div#menubar-btn span:nth-child(2) {margin: 8px 0;}
+header div#menubar-btn span:nth-child(3) {}
+/*mb-open*/
+header div#menubar-btn.mb-open {}
+header div#menubar-btn.mb-open span {transform: rotate(45deg) translate(2px, 0px);margin: 0;}
+header div#menubar-btn.mb-open span:nth-child(2) {display: none;}
+header div#menubar-btn.mb-open span:nth-child(3) {transform: rotate(-45deg) translate(2px, 1px);}
+
+/*============================ 
+footer
+============================*/
+footer {}
+/**/
+footer ul#footernav {}
+footer ul#footernav li {}
+footer ul#footernav li a {}
+footer small {}
+}
